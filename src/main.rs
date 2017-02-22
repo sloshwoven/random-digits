@@ -1,6 +1,8 @@
 extern crate clap;
+extern crate rand;
 
 use clap::{Arg, App};
+use rand::Rng;
 
 fn main() {
     let matches = App::new("random-digits")
@@ -18,6 +20,21 @@ fn main() {
             .validator(is_valid_num)
             .help("number of random digits on each output line"))
         .get_matches();
+
+    // these unwraps are safe because get_matches would have failed if either wasn't present or
+    // wasn't formatted correctly
+    let lines = matches.value_of("lines").unwrap().parse::<u32>().unwrap();
+    let width = matches.value_of("width").unwrap().parse::<u32>().unwrap();
+
+    let mut rng = rand::thread_rng();
+
+    for _ in 0..lines {
+        for _ in 0..width {
+            print!("{}", rng.gen_range(0, 10));
+        }
+
+        println!();
+    }
 }
 
 fn is_valid_num(s: String) -> Result<(), String> {
