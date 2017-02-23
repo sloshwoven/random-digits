@@ -36,7 +36,12 @@ fn parse_args<'a>() -> ArgMatches<'a> {
 fn is_valid_num(s: String) -> Result<(), String> {
     s.parse::<u32>()
         .map(|_| ())
-        .map_err(|_| format!("{} is not a valid number", s))
+        .map_err(|_| {
+            format!("{} is not an integer between {} and {}",
+                    s,
+                    u32::min_value(),
+                    u32::max_value())
+        })
 }
 
 fn print_random_digits(lines: u32, width: u32) {
