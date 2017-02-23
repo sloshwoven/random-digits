@@ -1,11 +1,22 @@
 extern crate clap;
 extern crate rand;
 
-use clap::{Arg, App};
+use clap::{App, Arg, ArgMatches};
 use rand::Rng;
 
 fn main() {
-    let matches = App::new("random-digits")
+    let matches = parse_args();
+
+    // these unwraps are safe because parse_args would have failed if either wasn't present or
+    // wasn't formatted correctly
+    let lines = matches.value_of("lines").unwrap().parse::<u32>().unwrap();
+    let width = matches.value_of("width").unwrap().parse::<u32>().unwrap();
+
+    print_random_digits(lines, width);
+}
+
+fn parse_args<'a>() -> ArgMatches<'a> {
+    App::new("random-digits")
         .version("0.1.0")
         .arg(Arg::with_name("lines")
             .required(true)
@@ -19,13 +30,16 @@ fn main() {
             .value_name("WIDTH")
             .validator(is_valid_num)
             .help("number of random digits on each output line"))
-        .get_matches();
+        .get_matches()
+}
 
-    // these unwraps are safe because get_matches would have failed if either wasn't present or
-    // wasn't formatted correctly
-    let lines = matches.value_of("lines").unwrap().parse::<u32>().unwrap();
-    let width = matches.value_of("width").unwrap().parse::<u32>().unwrap();
+fn is_valid_num(s: String) -> Result<(), String> {
+    s.parse::<u32>()
+        .map(|_| ())
+        .map_err(|_| format!("{} is not a valid number", s))
+}
 
+fn print_random_digits(lines: u32, width: u32) {
     let mut rng = rand::thread_rng();
 
     for _ in 0..lines {
@@ -35,10 +49,4 @@ fn main() {
 
         println!();
     }
-}
-
-fn is_valid_num(s: String) -> Result<(), String> {
-    s.parse::<u32>()
-        .map(|_| ())
-        .map_err(|_| format!("{} is not a valid number", s))
 }
