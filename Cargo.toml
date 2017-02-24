@@ -1,7 +1,10 @@
 [package]
 name = "random-digits"
 version = "0.1.0"
+description = "command-line program that generates random digits"
 authors = ["sloshwoven <slosh.woven@gmail.com>"]
+license = "BSD3"
+publish = false
 
 [dependencies]
 clap = "2.20"
