@@ -2,6 +2,7 @@
 name = "random-digits"
 version = "0.1.0"
 description = "Prints random digits."
+repository = "https://github.com/sloshwoven/random-digits"
 authors = ["sloshwoven <slosh.woven@gmail.com>"]
 license = "BSD3"
 publish = false
