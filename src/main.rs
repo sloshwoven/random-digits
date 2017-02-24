@@ -16,8 +16,8 @@ fn main() {
 }
 
 fn parse_args<'a>() -> ArgMatches<'a> {
-    App::new("random-digits")
-        .version("0.1.0")
+    App::new(env!("CARGO_PKG_NAME"))
+        .version(env!("CARGO_PKG_VERSION"))
         .arg(Arg::with_name("lines")
             .required(true)
             .takes_value(true)
