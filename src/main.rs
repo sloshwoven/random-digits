@@ -18,6 +18,7 @@ fn main() {
 fn parse_args<'a>() -> ArgMatches<'a> {
     App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
+        .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(Arg::with_name("lines")
             .required(true)
             .takes_value(true)
