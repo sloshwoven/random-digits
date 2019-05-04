@@ -3,6 +3,7 @@ extern crate rand;
 
 use clap::{App, Arg, ArgMatches};
 use rand::Rng;
+use std::io::{self, prelude::*};
 
 fn main() {
     let matches = parse_args();
@@ -52,11 +53,14 @@ fn is_valid_num(s: String) -> Result<(), String> {
 fn print_random_digits(lines: u32, width: u32) {
     let mut rng = rand::thread_rng();
 
+    let stdout = io::stdout();
+    let mut stdout = stdout.lock();
+
     for _ in 0..lines {
         for _ in 0..width {
-            print!("{}", rng.gen_range(0, 10));
+            write!(stdout, "{}", rng.gen_range(0, 10)).unwrap();
         }
 
-        println!();
+        writeln!(stdout).unwrap();
     }
 }
