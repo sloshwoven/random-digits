@@ -9,5 +9,5 @@ license = "BSD3"
 publish = false
 
 [dependencies]
-clap = "2.20"
+clap = "2.33"
 rand = "0.3"
