@@ -5,7 +5,7 @@ use clap::{App, Arg, ArgMatches};
 use rand::Rng;
 use std::io::{self, prelude::*};
 
-fn main() {
+fn main() -> Result<(), io::Error> {
     let matches = parse_args();
 
     // these unwraps are safe because parse_args would have failed if either wasn't present or
@@ -13,7 +13,7 @@ fn main() {
     let lines = matches.value_of("lines").unwrap().parse::<u32>().unwrap();
     let width = matches.value_of("width").unwrap().parse::<u32>().unwrap();
 
-    print_random_digits(lines, width);
+    print_random_digits(lines, width)
 }
 
 fn parse_args<'a>() -> ArgMatches<'a> {
@@ -50,7 +50,7 @@ fn is_valid_num(s: String) -> Result<(), String> {
     })
 }
 
-fn print_random_digits(lines: u32, width: u32) {
+fn print_random_digits(lines: u32, width: u32) -> Result<(), io::Error> {
     let mut rng = rand::thread_rng();
 
     let stdout = io::stdout();
@@ -58,9 +58,11 @@ fn print_random_digits(lines: u32, width: u32) {
 
     for _ in 0..lines {
         for _ in 0..width {
-            write!(stdout, "{}", rng.gen_range(0, 10)).unwrap();
+            write!(stdout, "{}", rng.gen_range(0, 10))?;
         }
 
-        writeln!(stdout).unwrap();
+        writeln!(stdout)?;
     }
+
+    Ok(())
 }
