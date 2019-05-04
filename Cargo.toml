@@ -11,3 +11,7 @@ publish = false
 [dependencies]
 clap = "2.33"
 rand = "0.6"
+
+[profile.release]
+lto = true
+codegen-units = 1
