@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Prints random digits."
 repository = "https://github.com/sloshwoven/random-digits"
 authors = ["sloshwoven <slosh.woven@gmail.com>"]
+edition = "2018"
 license = "BSD3"
 publish = false
 
